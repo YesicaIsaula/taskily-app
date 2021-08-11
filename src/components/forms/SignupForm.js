@@ -3,6 +3,7 @@ import { StyleSheet, View } from "react-native";
 import { Button, Caption, Text, TextInput } from "react-native-paper";
 import { Context as AuthContext } from "../../providers/AuthContext";
 import { validate } from "email-validator";
+import usePasswordValidator from 'react-use-password-validator'
 
 function SignupForm({ navigation }) {
   const { state, signup } = useContext(AuthContext);
@@ -15,6 +16,14 @@ function SignupForm({ navigation }) {
   const [passwordError, setPasswordError] = useState(false);
   const [confirmPasswordError, setConfirmPasswordError] = useState(false);
   const [error, setError] = useState(false);
+
+  const [ isValid, setIsValid ] = usePasswordValidator({
+    digits: 2,
+    lowercase: true,
+    uppercase: 2,
+    spaces: false,
+    symbols: true
+  })
 
   // Verificar si el usuario se registra en la app
   useEffect(() => {
@@ -83,23 +92,31 @@ function SignupForm({ navigation }) {
         label="Password"
         value={password}
         onChangeText={setPassword}
+        onChange={ e => {
+          setPassword(e.target.value)
+          setIsValid(e.target.value)
+        }}
         autoCapitalize="none"
         secureTextEntry
         onBlur={() => handleVerify("password")}
       />
-      {passwordError && (
-        <Caption>Please enter a valid password. Min 6 characters</Caption>
+      {setIsValid && (
+        <Caption>Please enter a valid password</Caption>
       )}
       <TextInput
         mode="outlined"
         label="Confirm password"
         value={confirmPassword}
         onChangeText={setConfirmPassword}
+        onChange={ e => {
+          setPassword(e.target.value)
+          setIsValid(e.target.value)
+        }}
         autoCapitalize="none"
         secureTextEntry
         onBlur={() => handleVerify("confirmPassword")}
       />
-      {confirmPasswordError && (
+      {setIsValid && (
         <Caption>Please enter your password confirmation</Caption>
       )}
       <Button

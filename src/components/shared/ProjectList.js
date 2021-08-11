@@ -1,6 +1,6 @@
 import React, { useContext } from "react";
 import { FlatList, StyleSheet, TouchableOpacity, View } from "react-native";
-import { Text } from "react-native-paper";
+import { Text, IconButton } from "react-native-paper";
 import Project from "./Project";
 import { Context as ProjectContext } from "../../providers/ProjectContext";
 
@@ -30,9 +30,10 @@ function ProjectList({ projects, navigation }) {
               <Project
                 id={item.id}
                 title={item.title}
-                timestamp={item.timestamp}
+                timestamp={item.timestamp} 
               />
             </TouchableOpacity>
+            
           </>
         )}
       />
@@ -48,7 +49,7 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     alignSelf: "center",
-  },
+  }
 });
 
 export default ProjectList;

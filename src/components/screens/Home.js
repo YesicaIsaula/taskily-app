@@ -20,7 +20,7 @@ function Home({ navigation }) {
         <Title style={styles.title}>My projects</Title>
         {/* Listado de proyectos existentes */}
         <ProjectList projects={projectState.projects} navigation={navigation} />
-        {/* <Button onPress={signout}>Signout</Button> */}
+        <Button onPress={signout}>Signout</Button> 
         {/* Una forma de acceder a la pantalla de creación de nuevos proyectos */}
       </View>
       <FAB

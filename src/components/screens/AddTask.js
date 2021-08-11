@@ -1,5 +1,5 @@
 import React, { useContext, useState } from "react";
-import { StyleSheet, View } from "react-native";
+import { StyleSheet, View, Alert } from "react-native";
 import {
   Button,
   Modal,
@@ -17,6 +17,33 @@ function AddTask({ navigation }) {
   const [showModal, setShowModal] = useState(false);
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
+
+
+  const deleteTask = async () => {
+    const dbRef = firebase.db.collection("projects").doc(timestamp);
+    await dbRef.delete();
+  };
+
+  const tDelete = () => {
+    Alert.alert(
+      "Taskily App",
+      "Are you sure you want to permanently this task?",
+      [
+        {
+          text: "Ok",
+          onPress: () => {
+            deleteTask(), navigation.navigate("AddTask");
+          },
+        },
+        {
+          text: "Cancel",
+          onPress: () => {
+            navigation.navigate("AddTask");
+          },
+        },
+      ]
+    );
+  };
 
   // TODO: Agregar la tarea al proyecto
   const handleAddTask = () => {
@@ -52,6 +79,7 @@ function AddTask({ navigation }) {
     <View style={styles.container}>
       <Title>{state.currentProject.title}</Title>
       <Button onPress={() => setShowModal(true)}>Add task</Button>
+      <Button onPress={() => tDelete()}>Delete task</Button>
       {showModal && addTaskModal()}
     </View>
   );
